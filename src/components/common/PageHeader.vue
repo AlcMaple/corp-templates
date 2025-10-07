@@ -1,12 +1,9 @@
 <template>
   <section class="page-header" :style="headerStyle">
-    <!-- 背景遮罩 -->
     <div class="header-overlay"></div>
 
-    <!-- 头部内容 -->
     <div class="header-content">
       <div class="container">
-        <!-- 面包屑导航 -->
         <el-breadcrumb
           v-if="breadcrumb && breadcrumb.length > 0"
           separator="/"
@@ -22,32 +19,26 @@
           </el-breadcrumb-item>
         </el-breadcrumb>
 
-        <!-- 页面标题 -->
         <div class="header-text">
-          <!-- 英文副标题 -->
           <el-text v-if="subtitle" class="header-subtitle">
             {{ subtitle }}
           </el-text>
 
-          <!-- 主标题 -->
           <el-text tag="h1" class="header-title">
             {{ title }}
           </el-text>
 
-          <!-- 标题装饰线 -->
           <div class="title-decoration">
             <div class="decoration-line"></div>
             <div class="decoration-dot"></div>
             <div class="decoration-line"></div>
           </div>
 
-          <!-- 描述文字 -->
           <el-text v-if="description" class="header-description">
             {{ description }}
           </el-text>
         </div>
 
-        <!-- 操作按钮 -->
         <div v-if="actions && actions.length > 0" class="header-actions">
           <el-button
             v-for="action in actions"
@@ -63,7 +54,6 @@
       </div>
     </div>
 
-    <!-- 滚动指示器 -->
     <div
       v-if="showScrollIndicator"
       class="scroll-indicator"
@@ -73,7 +63,6 @@
       <span class="scroll-text">继续浏览</span>
     </div>
 
-    <!-- 装饰元素 -->
     <div class="header-decorations">
       <div class="decoration-shape decoration-shape-1"></div>
       <div class="decoration-shape decoration-shape-2"></div>
@@ -209,7 +198,7 @@ const scrollToContent = () => {
 }
 
 .header-title {
-  @apply text-4xl md:text-6xl font-bold leading-tight;
+  @apply text-4xl md:text-6xl font-bold leading-tight text-white;
 }
 
 .title-decoration {
