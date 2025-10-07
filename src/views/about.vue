@@ -8,7 +8,6 @@
       title="关于我们"
       subtitle="About Us"
       description="深入了解我们的企业故事、价值理念和发展愿景"
-      :breadcrumb="breadcrumbItems"
       background-image="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80"
     />
 
@@ -89,7 +88,7 @@
             :sm="12"
             :md="6"
           >
-            <el-card class="value-card" shadow="hover">
+            <el-card class="value-card" shadow="never">
               <div class="value-content">
                 <div class="value-icon">
                   <el-icon :color="value.color">
@@ -193,7 +192,7 @@
             :lg="4"
           >
             <div class="cert-item">
-              <el-card class="cert-card" shadow="hover">
+              <el-card class="cert-card" shadow="never">
                 <div class="cert-content">
                   <el-icon class="cert-icon" :color="cert.color">
                     <component :is="cert.icon" />
@@ -234,38 +233,32 @@ import PageHeader from "@/components/common/PageHeader.vue";
 import SectionHeader from "@/components/common/SectionHeader.vue";
 import CompanyMilestones from "@/components/sections/CompanyMilestones.vue";
 
-// 面包屑导航
-const breadcrumbItems = reactive([
-  { text: "首页", to: "/" },
-  { text: "关于我们", to: "/about" },
-]);
-
 // 核心价值观
 const coreValues = reactive([
   {
     id: 1,
-    icon: "Trophy",
+    icon: Trophy,
     color: "#409eff",
     title: "卓越品质",
     description: "追求完美，精益求精，为客户提供最优质的产品和服务",
   },
   {
     id: 2,
-    icon: "UserFilled",
+    icon: UserFilled,
     color: "#67c23a",
     title: "以人为本",
     description: "重视员工发展，关注客户需求，构建和谐共赢的生态",
   },
   {
     id: 3,
-    icon: "Promotion",
+    icon: Promotion,
     color: "#e6a23c",
     title: "持续创新",
     description: "拥抱变化，勇于创新，用技术推动行业进步",
   },
   {
     id: 4,
-    icon: "Star",
+    icon: Star,
     color: "#f56c6c",
     title: "诚信负责",
     description: "诚实守信，勇于担当，对客户、员工和社会负责",
@@ -278,35 +271,28 @@ const certifications = reactive([
     id: 1,
     name: "ISO 9001",
     year: "2020",
-    icon: "Medal",
+    icon: Medal,
     color: "#409eff",
   },
   {
     id: 2,
     name: "ISO 14001",
     year: "2021",
-    icon: "Medal",
+    icon: Medal,
     color: "#67c23a",
   },
   {
     id: 3,
-    name: "高新技术企业",
-    year: "2019",
-    icon: "Award",
-    color: "#e6a23c",
-  },
-  {
-    id: 4,
     name: "软件著作权",
     year: "2018",
-    icon: "Trophy",
+    icon: Trophy,
     color: "#f56c6c",
   },
   {
-    id: 5,
+    id: 4,
     name: "发明专利",
     year: "2022",
-    icon: "Star",
+    icon: Star,
     color: "#909399",
   },
 ]);
@@ -372,7 +358,7 @@ const certifications = reactive([
 }
 
 .value-card {
-  @apply border-none shadow-md hover:shadow-lg transition-shadow h-full;
+  @apply border-none shadow-md h-full;
 }
 
 .value-content {
@@ -417,7 +403,7 @@ const certifications = reactive([
 }
 
 .org-item {
-  @apply rounded-lg shadow-lg p-6 min-w-32 cursor-pointer hover:shadow-xl transition-shadow;
+  @apply rounded-lg shadow-lg p-6 min-w-32 cursor-default;
 }
 
 .org-content {
@@ -450,7 +436,7 @@ const certifications = reactive([
 }
 
 .cert-card {
-  @apply border-none shadow-md hover:shadow-lg transition-shadow;
+  @apply border-none shadow-md;
 }
 
 .cert-content {

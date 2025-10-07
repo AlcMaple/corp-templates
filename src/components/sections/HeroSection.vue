@@ -194,6 +194,21 @@ onMounted(() => {
   @apply flex flex-col sm:flex-row gap-4;
 }
 
+.hero-actions .el-button--primary:hover {
+  background-color: var(--el-color-primary) !important;
+  border-color: var(--el-color-primary) !important;
+  color: var(--el-color-white) !important;
+}
+
+.hero-actions .el-button:not(.el-button--primary):hover {
+  color: var(--el-button-text-color, var(--el-text-color-regular)) !important;
+  border-color: var(
+    --el-button-border-color,
+    var(--el-border-color)
+  ) !important;
+  background-color: var(--el-button-bg-color, transparent) !important;
+  transition: none !important;
+}
 .hero-stats {
   @apply grid grid-cols-3 gap-8 pt-8 border-t border-gray-200;
 }

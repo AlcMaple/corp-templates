@@ -54,18 +54,6 @@
                   >
                     {{ member.name.charAt(0) }}
                   </el-avatar>
-
-                  <!-- 社交媒体链接 -->
-                  <div class="member-social">
-                    <el-button
-                      v-for="social in member.socials"
-                      :key="social.type"
-                      :icon="social.icon"
-                      circle
-                      size="small"
-                      @click.stop="openSocialLink(social.url)"
-                    />
-                  </div>
                 </div>
 
                 <div class="member-info">
@@ -301,7 +289,7 @@ const memberDetailVisible = ref(false);
 const teamStats = reactive([
   {
     id: 1,
-    icon: "UserFilled",
+    icon: UserFilled,
     color: "#409eff",
     title: "团队成员",
     value: 500,
@@ -310,7 +298,7 @@ const teamStats = reactive([
   },
   {
     id: 2,
-    icon: "TrendCharts",
+    icon: TrendCharts,
     color: "#67c23a",
     title: "平均经验",
     value: 8,
@@ -319,7 +307,7 @@ const teamStats = reactive([
   },
   {
     id: 3,
-    icon: "Trophy",
+    icon: Trophy,
     color: "#e6a23c",
     title: "项目经验",
     value: 1000,
@@ -328,7 +316,7 @@ const teamStats = reactive([
   },
   {
     id: 4,
-    icon: "Star",
+    icon: Star,
     color: "#f56c6c",
     title: "客户满意度",
     value: 99,
@@ -451,7 +439,7 @@ const departments = reactive([
     id: 1,
     name: "技术研发部",
     description: "负责产品技术研发与创新",
-    icon: "Setting",
+    icon: Setting,
     color: "#409eff",
     memberCount: 150,
     projectCount: 25,
@@ -467,7 +455,7 @@ const departments = reactive([
     id: 2,
     name: "产品设计部",
     description: "负责产品设计与用户体验",
-    icon: "Monitor",
+    icon: Monitor,
     color: "#67c23a",
     memberCount: 80,
     projectCount: 15,
@@ -483,7 +471,7 @@ const departments = reactive([
     id: 3,
     name: "市场营销部",
     description: "负责市场推广与品牌建设",
-    icon: "ShoppingCart",
+    icon: ShoppingCart,
     color: "#e6a23c",
     memberCount: 100,
     projectCount: 20,
@@ -499,7 +487,7 @@ const departments = reactive([
     id: 4,
     name: "客户服务部",
     description: "负责客户支持与售后服务",
-    icon: "Service",
+    icon: Service,
     color: "#f56c6c",
     memberCount: 120,
     projectCount: 10,
@@ -550,7 +538,7 @@ const handleContactHR = () => {
 }
 
 .stat-item {
-  @apply text-center bg-gray-50 rounded-xl p-6 hover:bg-gray-100 transition-colors;
+  @apply text-center bg-gray-50 rounded-xl p-6;
 }
 
 .stat-icon {
@@ -742,6 +730,22 @@ const handleContactHR = () => {
 
 .join-us-actions {
   @apply space-x-4;
+}
+
+.join-us-actions .el-button--primary:hover {
+  background-color: var(--el-color-primary) !important;
+  border-color: var(--el-color-primary) !important;
+  color: var(--el-color-white) !important;
+}
+
+.join-us-actions .el-button:not(.el-button--primary):hover {
+  color: var(--el-button-text-color, var(--el-text-color-regular)) !important;
+  border-color: var(
+    --el-button-border-color,
+    var(--el-border-color)
+  ) !important;
+  background-color: var(--el-button-bg-color, transparent) !important;
+  transition: none !important;
 }
 
 /* 成员详情弹窗 */

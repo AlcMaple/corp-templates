@@ -12,7 +12,7 @@ const router = createRouter({
       name: 'home',
       component: HomePage,
       meta: {
-        title: '首页 - 企业名称',
+        title: '首页',
         description: '专注于创新技术解决方案的现代化企业'
       }
     },
@@ -21,7 +21,7 @@ const router = createRouter({
       name: 'about',
       component: AboutPage,
       meta: {
-        title: '关于我们 - 企业名称',
+        title: '关于我们',
         description: '了解我们的企业文化、发展历程和团队介绍'
       }
     },

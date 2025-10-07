@@ -204,12 +204,15 @@
 <script setup>
 import { ref, reactive, computed } from "vue";
 import {
+  ChatDotRound,
+  Share,
+  Connection,
+  CaretTop,
   Location,
   Phone,
   Message,
   Clock,
   Bell,
-  CaretTop,
 } from "@element-plus/icons-vue";
 import { ElMessage } from "element-plus";
 
@@ -220,10 +223,10 @@ const currentYear = computed(() => new Date().getFullYear());
 
 // 社交媒体链接
 const socialLinks = reactive([
-  { name: "WeChat", icon: "ChatDotRound", url: "#" },
-  { name: "Weibo", icon: "Share", url: "#" },
-  { name: "LinkedIn", icon: "Connection", url: "#" },
-  { name: "Email", icon: "Message", url: "mailto:info@company.com" },
+  { name: "WeChat", icon: ChatDotRound, url: "#" },
+  { name: "Weibo", icon: Share, url: "#" },
+  { name: "LinkedIn", icon: Connection, url: "#" },
+  { name: "Email", icon: Message, url: "mailto:info@company.com" },
 ]);
 
 // 快速链接

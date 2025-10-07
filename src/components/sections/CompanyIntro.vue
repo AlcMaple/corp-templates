@@ -211,28 +211,28 @@ import SectionHeader from "@/components/common/SectionHeader.vue";
 const advantages = reactive([
   {
     id: 1,
-    icon: "Trophy",
+    icon: Trophy,
     color: "#409eff",
     title: "技术领先",
     description: "拥有业界顶尖的技术团队和先进的研发设备",
   },
   {
     id: 2,
-    icon: "UserFilled",
+    icon: UserFilled,
     color: "#67c23a",
     title: "专业团队",
     description: "经验丰富的专业人员，为您提供一对一服务",
   },
   {
     id: 3,
-    icon: "Promotion",
+    icon: Promotion,
     color: "#e6a23c",
     title: "快速响应",
     description: "7x24小时服务支持，快速响应客户需求",
   },
   {
     id: 4,
-    icon: "Star",
+    icon: Star,
     color: "#f56c6c",
     title: "品质保证",
     description: "严格的质量管控体系，确保产品和服务品质",
@@ -243,7 +243,7 @@ const advantages = reactive([
 const companyStats = reactive([
   {
     id: 1,
-    icon: "TrendCharts",
+    icon: TrendCharts,
     color: "#409eff",
     title: "年营业额",
     value: 2.5,
@@ -252,7 +252,7 @@ const companyStats = reactive([
   },
   {
     id: 2,
-    icon: "UserFilled",
+    icon: UserFilled,
     color: "#67c23a",
     title: "员工数量",
     value: 500,
@@ -261,7 +261,7 @@ const companyStats = reactive([
   },
   {
     id: 3,
-    icon: "Shop",
+    icon: Shop,
     color: "#e6a23c",
     title: "服务客户",
     value: 1000,
@@ -270,7 +270,7 @@ const companyStats = reactive([
   },
   {
     id: 4,
-    icon: "Connection",
+    icon: Connection,
     color: "#f56c6c",
     title: "合作伙伴",
     value: 200,

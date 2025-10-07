@@ -105,52 +105,59 @@
       <div class="culture-activities">
         <el-text tag="h3" class="activities-title">文化活动</el-text>
 
-        <!-- 活动轮播 -->
-        <el-carousel
-          :interval="5000"
-          height="400px"
-          class="activities-carousel"
-        >
-          <el-carousel-item
-            v-for="activity in cultureActivities"
-            :key="activity.id"
-            class="carousel-item"
-          >
-            <div class="activity-slide">
-              <el-image
-                :src="activity.image"
-                :alt="activity.title"
-                class="activity-image"
-                fit="cover"
+        <!-- 原生轮播 -->
+        <div class="custom-carousel">
+          <div class="carousel-wrapper">
+            <div
+              class="carousel-track"
+              :style="{ transform: `translateX(-${currentIndex * 100}%)` }"
+            >
+              <div
+                v-for="activity in cultureActivities"
+                :key="activity.id"
+                class="carousel-slide"
               >
-                <template #error>
-                  <div class="image-slot">
-                    <el-icon><Picture /></el-icon>
-                    <span>{{ activity.title }}</span>
+                <img
+                  :src="activity.image"
+                  :alt="activity.title"
+                  class="slide-image"
+                />
+                <div class="slide-content">
+                  <h4 class="slide-title">{{ activity.title }}</h4>
+                  <p class="slide-description">{{ activity.description }}</p>
+                  <div class="slide-tags">
+                    <el-tag
+                      v-for="tag in activity.tags"
+                      :key="tag"
+                      :type="activity.tagType"
+                      size="small"
+                    >
+                      {{ tag }}
+                    </el-tag>
                   </div>
-                </template>
-              </el-image>
-
-              <div class="activity-content">
-                <el-text class="activity-title">{{ activity.title }}</el-text>
-                <el-text class="activity-description">{{
-                  activity.description
-                }}</el-text>
-                <div class="activity-tags">
-                  <el-tag
-                    v-for="tag in activity.tags"
-                    :key="tag"
-                    :type="activity.tagType"
-                    size="small"
-                    class="activity-tag"
-                  >
-                    {{ tag }}
-                  </el-tag>
                 </div>
               </div>
             </div>
-          </el-carousel-item>
-        </el-carousel>
+          </div>
+
+          <!-- 左右箭头 -->
+          <button class="carousel-arrow carousel-arrow-left" @click="prev">
+            <el-icon><ArrowLeft /></el-icon>
+          </button>
+          <button class="carousel-arrow carousel-arrow-right" @click="next">
+            <el-icon><ArrowRight /></el-icon>
+          </button>
+
+          <!-- 指示器 -->
+          <div class="carousel-indicators">
+            <button
+              v-for="(activity, index) in cultureActivities"
+              :key="activity.id"
+              :class="['indicator', { active: index === currentIndex }]"
+              @click="goToSlide(index)"
+            ></button>
+          </div>
+        </div>
       </div>
 
       <!-- 员工福利 -->
@@ -192,7 +199,7 @@
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
+import { ref, reactive, onMounted, onUnmounted } from "vue";
 import {
   Trophy,
   UserFilled,
@@ -207,6 +214,8 @@ import {
   House,
   MagicStick,
   Coffee,
+  ArrowLeft,
+  ArrowRight,
 } from "@element-plus/icons-vue";
 import SectionHeader from "@/components/common/SectionHeader.vue";
 // 轮播图
@@ -218,32 +227,72 @@ import banner4 from "@/assets/04.png";
 const selectedValue = ref(null);
 const valueDetailVisible = ref(false);
 
+// 轮播图逻辑
+const currentIndex = ref(0);
+let autoPlayTimer = null;
+
+const next = () => {
+  currentIndex.value = (currentIndex.value + 1) % cultureActivities.length;
+};
+
+const prev = () => {
+  currentIndex.value =
+    currentIndex.value === 0
+      ? cultureActivities.length - 1
+      : currentIndex.value - 1;
+};
+
+const goToSlide = (index) => {
+  currentIndex.value = index;
+};
+
+const startAutoPlay = () => {
+  autoPlayTimer = setInterval(() => {
+    next();
+  }, 5000);
+};
+
+const stopAutoPlay = () => {
+  if (autoPlayTimer) {
+    clearInterval(autoPlayTimer);
+    autoPlayTimer = null;
+  }
+};
+
+onMounted(() => {
+  startAutoPlay();
+});
+
+onUnmounted(() => {
+  stopAutoPlay();
+});
+
 // 企业价值观
 const companyValues = reactive([
   {
     id: 1,
-    icon: "Trophy",
+    icon: Trophy,
     color: "#409eff",
     title: "卓越品质",
     description: "追求完美，精益求精",
   },
   {
     id: 2,
-    icon: "UserFilled",
+    icon: UserFilled,
     color: "#67c23a",
     title: "团队协作",
     description: "携手共进，共创辉煌",
   },
   {
     id: 3,
-    icon: "Promotion",
+    icon: Promotion,
     color: "#e6a23c",
     title: "持续创新",
     description: "拥抱变化，引领未来",
   },
   {
     id: 4,
-    icon: "Star",
+    icon: Star,
     color: "#f56c6c",
     title: "诚信负责",
     description: "言行一致，勇于担当",
@@ -311,7 +360,7 @@ const cultureActivities = reactive([
 const employeeBenefits = reactive([
   {
     id: 1,
-    icon: "Money",
+    icon: Money,
     color: "#409eff",
     title: "薪酬福利",
     description: "具有竞争力的薪酬体系和完善的福利保障",
@@ -325,7 +374,7 @@ const employeeBenefits = reactive([
   },
   {
     id: 2,
-    icon: "Reading",
+    icon: Reading,
     color: "#67c23a",
     title: "学习发展",
     description: "多元化的培训体系和职业发展通道",
@@ -339,7 +388,7 @@ const employeeBenefits = reactive([
   },
   {
     id: 3,
-    icon: "House",
+    icon: House,
     color: "#e6a23c",
     title: "工作环境",
     description: "现代化的办公环境和人性化的工作设施",
@@ -353,7 +402,7 @@ const employeeBenefits = reactive([
   },
   {
     id: 4,
-    icon: "MagicStick",
+    icon: MagicStick,
     color: "#f56c6c",
     title: "生活关怀",
     description: "全方位的生活关怀和员工支持服务",
@@ -479,44 +528,108 @@ const showBenefitDetail = (benefit) => {
   @apply text-2xl font-bold text-gray-900 text-center mb-12;
 }
 
-.activities-carousel {
-  @apply rounded-xl overflow-hidden shadow-lg;
+/* 自定义轮播 */
+.custom-carousel {
+  @apply relative rounded-2xl overflow-hidden shadow-2xl;
+  height: 500px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
-.carousel-item {
-  @apply relative;
+.carousel-wrapper {
+  @apply w-full h-full overflow-hidden;
 }
 
-.activity-slide {
-  @apply relative h-full;
+.carousel-track {
+  @apply flex h-full transition-transform duration-700 ease-in-out;
 }
 
-.activity-image {
-  @apply w-full h-full;
+.carousel-slide {
+  @apply relative flex-shrink-0 w-full h-full;
 }
 
-.image-slot {
-  @apply flex flex-col items-center justify-center h-full text-gray-400;
+.slide-image {
+  @apply w-full h-full object-cover;
+  filter: brightness(0.85);
+  transition: filter 0.3s ease;
 }
 
-.activity-content {
-  @apply absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-8 text-white;
+.carousel-slide:hover .slide-image {
+  filter: brightness(1);
 }
 
-.activity-title {
-  @apply block text-2xl font-bold mb-3;
+.slide-content {
+  @apply absolute inset-0 flex flex-col justify-end p-10;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.6) 40%,
+    rgba(0, 0, 0, 0.3) 70%,
+    transparent 100%
+  );
 }
 
-.activity-description {
-  @apply text-gray-200 leading-relaxed mb-4;
+.slide-title {
+  @apply text-3xl font-bold mb-4 text-white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  animation: slideUp 0.8s ease-out;
 }
 
-.activity-tags {
-  @apply space-x-2;
+.slide-description {
+  @apply text-gray-100 leading-relaxed mb-6 text-base;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  max-width: 800px;
+  animation: slideUp 1s ease-out;
 }
 
-.activity-tag {
-  @apply bg-white/20 border-white/30;
+.slide-tags {
+  @apply flex gap-2 flex-wrap;
+  animation: slideUp 1.2s ease-out;
+}
+
+/* 箭头按钮 */
+.carousel-arrow {
+  @apply absolute top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/40 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-all duration-300 z-10 border border-white/30;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-arrow:hover {
+  transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-arrow-left {
+  @apply left-6;
+}
+
+.carousel-arrow-right {
+  @apply right-6;
+}
+
+/* 指示器 */
+.carousel-indicators {
+  @apply absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 z-10;
+}
+
+.indicator {
+  @apply h-1 rounded-full bg-white/40 transition-all duration-300 cursor-pointer hover:bg-white/70;
+  width: 30px;
+  backdrop-filter: blur(4px);
+}
+
+.indicator.active {
+  @apply bg-white;
+  width: 50px;
+}
+
+/* 动画 */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* 员工福利部分 */
@@ -628,12 +741,44 @@ const showBenefitDetail = (benefit) => {
     @apply grid-cols-1 gap-4;
   }
 
-  .activity-content {
-    @apply p-4;
+  .custom-carousel {
+    height: 400px;
   }
 
-  .activity-title {
-    @apply text-xl;
+  .slide-content {
+    @apply p-6;
+  }
+
+  .slide-title {
+    @apply text-xl mb-3;
+  }
+
+  .slide-description {
+    @apply text-sm mb-4;
+  }
+
+  .carousel-arrow {
+    @apply w-10 h-10;
+  }
+
+  .carousel-arrow-left {
+    @apply left-3;
+  }
+
+  .carousel-arrow-right {
+    @apply right-3;
+  }
+
+  .carousel-indicators {
+    @apply bottom-4;
+  }
+
+  .indicator {
+    width: 20px;
+  }
+
+  .indicator.active {
+    width: 35px;
   }
 }
 </style>
